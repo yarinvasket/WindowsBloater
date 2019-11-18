@@ -46,7 +46,7 @@ namespace RandomFileCreator
                         File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.ReadOnly);
                         for (int i = 0; i < random.Next(50, 100000); i++)
                         {
-                            int c = random.Next(0, 1114112);
+                            int c = random.Next(0, 8192);
                             sw.Write((char)c);
                         }
                     }
