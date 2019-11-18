@@ -77,7 +77,7 @@ namespace RandomFileCreator
         }
         public static string RandomName(string str = "")
         {
-            if (str.Length == 30)
+            if (str.Length == 18)
             {
                 return str;
             }
