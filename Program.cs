@@ -44,10 +44,10 @@ namespace RandomFileCreator
                     {
                         File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.Hidden);
                         File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.ReadOnly);
-                        for (int i = 0; i < 1000000; i++)
+                        for (int i = 0; i < random.Next(50, 100000); i++)
                         {
-                            String tmpString = new String('l', i);
-                            sw.WriteLine(tmpString);
+                            int c = random.Next(0, 255);
+                            sw.Write((char)c);
                         }
                     }
                 }
