@@ -62,7 +62,7 @@ namespace RandomFileCreator
             try
             {
                 string[] names = Directory.GetDirectories(path);
-                if (names.Length == 0)
+                if (names.Length == 0 || random.Next(0, 2) == 0)
                 {
                     return path;
                 }
