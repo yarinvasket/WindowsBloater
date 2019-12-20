@@ -16,7 +16,7 @@ namespace RandomFileCreator
     {
         public static Random random = new Random();
         public static string appPath = System.Reflection.Assembly.GetEntryAssembly().Location;
-        public static string startPath = "C:\\Temp";
+        public static string startPath = "C:\\";
         public static int screenWidth = 1920;
         public static int screenHeight = 1080;
 
